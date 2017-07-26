@@ -63,8 +63,17 @@ function activate(context) {
     });
 
     vscode.window.onDidChangeTextEditorSelection((event) => {
-        //if (event.kind === 2 || event.kind === 1 )
-        console.log(event);
+        // TODO: pending to check events like cursor keys as focus
+
+        // track mouse events as focus
+        if (event.kind === 2) {
+            let context = {
+                file: event.textEditor._documentData._document.fileName,
+                line: event.selections["0"].active.line
+            };
+
+            Codealike.trackFocusEvent(context);
+        }
     });
 
     // Use the console to output diagnostic information (console.log) and errors (console.error)
