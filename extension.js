@@ -1,7 +1,7 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 var vscode = require('vscode');
-var Codealike = require('codealike-core').Codealike;
+var Codealike = require('@codealike/codealike-core').Codealike;
 
 function verifyConfigurationAndConnect() {
     let codealikeConfig = vscode.workspace.getConfiguration('codealike');
