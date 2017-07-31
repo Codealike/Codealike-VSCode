@@ -9,6 +9,8 @@ function verifyConfigurationAndConnect() {
     if (!codealikeConfig && !codealikeConfig.userToken) {
         Codealike.disconnect();
         vscode.window.showInformationMessage("Codealike is disconnected.");
+
+        askForUserToken();
     }
     else {
         let token = codealikeConfig.userToken;
@@ -30,10 +32,25 @@ function verifyConfigurationAndConnect() {
             }
         },
         (error) => {
-          vscode.window.showErrorMessage("Codealike couldn't connect with provided token. Please review it in the File > Preferences > Settings option.");
+            askForUserToken(codealikeConfig);
+          //vscode.window.showErrorMessage("Codealike couldn't connect with provided token. Please review it in the File > Preferences > Settings option.");
         }
       );
     }
+}
+
+function askForUserToken(config) {
+    vscode.window.showInputBox({
+        prompt: 'Codealike User Token',
+        ignoreFocusOut: true,
+        placeHolder: "Please enter your Codealike user token",
+        value: ""
+    })
+    .then(
+        (token) => {
+            config.update('userToken', token, true);
+        }
+    );
 }
 
 // this method is called when your extension is activated
