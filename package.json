@@ -2,7 +2,7 @@
   "name": "codealike-code",
   "displayName": "Codealike-code",
   "description": "Codealike for Visual Studio Code",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "publisher": "Codealike",
   "engines": {
     "vscode": "^1.14.0"
@@ -17,8 +17,8 @@
   "contributes": {
     "commands": [
       {
-        "command": "extension.sayHello",
-        "title": "Hello World"
+        "command": "codealike.connect",
+        "title": "Connect Codealike"
       }
     ]
   },
@@ -35,6 +35,6 @@
     "@types/mocha": "^2.2.32"
   },
   "dependencies": {
-    "@codealike/codealike-core": "0.0.1"
+    "@codealike/codealike-core": "0.0.4"
   }
 }
