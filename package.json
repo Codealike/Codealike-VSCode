@@ -2,14 +2,40 @@
   "name": "codealike-code",
   "displayName": "Codealike-code",
   "description": "Codealike for Visual Studio Code",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "publisher": "Codealike",
+  "license": "MIT",
+  "author": {
+      "email": "info@codealike.com",
+      "name": "Codealike",
+      "url": "http://codealike.com"
+  },
+  "repository": {
+      "type": "git",
+      "url": "https://github.com/Codealike/Codealike-VSCode"
+  },
+  "bugs": {
+      "url": "https://feedback.codealike.com",
+      "email": "info@codealike.com"
+  },
+  "categories": [
+      "Other"
+  ],
+  "keywords": [
+      "time-tracking",
+      "productivity",
+      "management",
+      "codealike"
+  ],
+  "preview": true,
+  "homepage": "https://codealike.com",
+  "icon": "images/AvatarBig.png",
+  "galleryBanner": {
+      "color": "#c0c0c0"
+  },
   "engines": {
     "vscode": "^1.14.0"
   },
-  "categories": [
-    "Other"
-  ],
   "activationEvents": [
     "*"
   ],
