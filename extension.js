@@ -58,6 +58,10 @@ function activate(context) {
         })
         .then(
             (token) => {
+                // if user has pressed esc, do nothing
+                if (token === undefined)
+                    return;
+
                 // set user token configuration
                 Codealike.setUserToken(token);
 
