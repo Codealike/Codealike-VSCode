@@ -51,9 +51,9 @@ function activate(context) {
 
         // else, ask for codealike user token
         vscode.window.showInputBox({
-            prompt: 'Codealike User Token',
+            prompt: 'Your Codealike API Token',
             ignoreFocusOut: true,
-            placeHolder: "Please enter your Codealike user token, or clean it to disconnect",
+            placeHolder: "Enter here your Codealike API token, or clean it to disconnect",
             value: Codealike.getUserToken()
         })
         .then(
