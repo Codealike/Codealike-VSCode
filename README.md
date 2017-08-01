@@ -1,7 +1,3 @@
-# codealike-code README
-
-<div style="margin:0px auto;width:650px">
-
 [![](https://blog.codealike.com/wp-content/uploads/2015/05/pie.png)](http://www.codealike.com)
 
 # TRACK YOUR CODING.
@@ -50,4 +46,3 @@ It helps you understand how much time you spend using different technologies. Ha
 _Powerful Metrics for High Performance Software Developers._
 
 [SIGN UP TO BEGIN](https://codealike.com/Account/Register) | [www.codealike.com](http://www.codealike.com) |
-</div>
