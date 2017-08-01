@@ -2,36 +2,36 @@
   "name": "codealike-code",
   "displayName": "Codealike",
   "description": "Codealike for Visual Studio Code",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "publisher": "Codealike",
   "license": "MIT",
   "author": {
-      "email": "info@codealike.com",
-      "name": "Codealike",
-      "url": "http://codealike.com"
+    "email": "info@codealike.com",
+    "name": "Codealike",
+    "url": "http://codealike.com"
   },
   "repository": {
-      "type": "git",
-      "url": "https://github.com/Codealike/Codealike-VSCode"
+    "type": "git",
+    "url": "https://github.com/Codealike/Codealike-VSCode"
   },
   "bugs": {
-      "url": "https://feedback.codealike.com",
-      "email": "info@codealike.com"
+    "url": "https://feedback.codealike.com",
+    "email": "info@codealike.com"
   },
   "categories": [
-      "Other"
+    "Other"
   ],
   "keywords": [
-      "time-tracking",
-      "productivity",
-      "management",
-      "codealike"
+    "time-tracking",
+    "productivity",
+    "management",
+    "codealike"
   ],
   "preview": true,
   "homepage": "https://codealike.com",
   "icon": "images/AvatarBig.png",
   "galleryBanner": {
-      "color": "#c0c0c0"
+    "color": "#c0c0c0"
   },
   "engines": {
     "vscode": "^1.14.0"
@@ -61,6 +61,6 @@
     "@types/mocha": "^2.2.32"
   },
   "dependencies": {
-    "@codealike/codealike-core": "0.0.5"
+    "@codealike/codealike-core": "0.0.6"
   }
 }
