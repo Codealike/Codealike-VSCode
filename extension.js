@@ -15,33 +15,28 @@ function activate(context) {
     if (vscode.workspace.rootPath) {
 
         // initialize plugin for current client and version
-        Codealike.initialize('vscode', '0.0.1');
+        Codealike.initialize('vscode', '0.0.3');
 
         // if user token configuration found, connect!
         if (Codealike.hasUserToken()) {
             // try to connect
             Codealike.connect()
                     .then(
-                        () => { statusBarItem.text = "Codealike is connected"; },
-                        () => { statusBarItem.text = "Codealike is not connected"; }
+                        () => { 
+                            statusBarItem.text = "Codealike is connected"; 
+
+                            startTrackingProject();
+                        },
+                        () => { 
+                            statusBarItem.text = "Codealike is not connected"; 
+
+                            stopTrackingProject();
+                        }
                     );
         }
         else {
             statusBarItem.text = "Click here to configure Codealike";
         }
-
-        // start tracking project
-        Codealike
-            .configure(vscode.workspace.rootPath)
-            .then((configuration) => {
-                // calculate when workspace started loading
-                let currentDate = new Date();
-
-                // start tracking project
-                Codealike.startTracking(configuration, currentDate);
-            });
-
-        setEventHandlers();
     }
 
     // Use the console to output diagnostic information (console.log) and errors (console.error)
@@ -70,11 +65,18 @@ function activate(context) {
                 if (token) {
                     Codealike.connect()
                         .then(
-                            () => { statusBarItem.text = "Codealike is connected"; },
-                            () => { statusBarItem.text = "Codealike cannot connect"; }
+                            () => { 
+                                statusBarItem.text = "Codealike is connected"; 
+                                startTrackingProject();
+                            },
+                            () => { 
+                                statusBarItem.text = "Codealike cannot connect"; 
+                                stopTrackingProject();
+                            }
                         );
                 }
                 else {
+                    stopTrackingProject();
                     Codealike.disconnect();
                     statusBarItem.text = "Click here to configure Codealike";
                 }
@@ -96,7 +98,22 @@ function deactivate() {
 }
 exports.deactivate = deactivate;
 
-function setEventHandlers() {
+function stopTrackingProject() {
+    Codealike.stopTracking();
+}
+
+function startTrackingProject() {
+    // start tracking project
+    Codealike
+        .configure(vscode.workspace.rootPath)
+        .then((configuration) => {
+            // calculate when workspace started loading
+            let currentDate = new Date();
+
+            // start tracking project
+            Codealike.startTracking(configuration, currentDate);
+        });
+
     vscode.workspace.onDidChangeTextDocument((event) => {
         let lineAt = null;
         if (event.contentChanges.length && event.contentChanges[0].range.length) {
