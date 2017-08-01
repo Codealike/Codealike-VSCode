@@ -1,65 +1,53 @@
 # codealike-code README
 
-This is the README for your extension "codealike-code". After writing up a brief description, we recommend including the following sections.
+<div style="margin:0px auto;width:650px">
 
-## Features
+[![](https://blog.codealike.com/wp-content/uploads/2015/05/pie.png)](http://www.codealike.com)
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+# TRACK YOUR CODING.
+# REAL-TIME.
+# AUTOMATIC.
 
-For example if there is an image subfolder under your extension project workspace:
+Codealike remembers everything you do on the code, so you don't have to.
 
-\!\[feature X\]\(images/feature-x.png\)
+It integrates to your IDE and browser while automatically tracks and analyzes your activity.
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+**You and your team get the benefits.**
 
-## Requirements
+Here are some of +15 (jaw-dropping) features.
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+#### Focus & Interruptions
 
-## Extension Settings
+Do you want to understand how your concentration grows and how interruptions affect it? This is the feature for you. Codealike shows you your "Focus Curve" but it also shows you how many interruptions you had during different periods of time. This is handy to show clearly how much effort it takes to recover from undesired interruptions.
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
+#### [![](https://blog.codealike.com/wp-content/uploads/2015/05/focus.gif)](http://www.codealike.com)
 
-For example:
 
-This extension contributes the following settings:
 
-* `myExtension.enable`: enable/disable this extension
-* `myExtension.thing`: set to `blah` to do something
+#### Timeline
 
-## Known Issues
+This feature shows you the ADN of your work. It rebuilds your day by showing you the precise sequence of activity that you did so you can drilldown and explore every segment of time to understand what you did.
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
+[![](https://blog.codealike.com/wp-content/uploads/2015/05/timeline.gif)](http://www.codealike.com)
 
-## Release Notes
 
-Users appreciate release notes as you update your extension.
+#### Code Tree
 
-### 1.0.0
+Shows you the amount of time you spend Editing, Reading, Debugging and Building on different code solutions and projects. But why should we stop there? You'll be able to drilldown all the way through Namespaces, Files, Classes, Methods and Members. Use this report to see code's contributors and technical debt.
 
-Initial release of ...
 
-### 1.0.1
+[![](https://blog.codealike.com/wp-content/uploads/2015/05/tree.gif)](http://www.codealike.com)
 
-Fixed issue #.
+[![](https://blog.codealike.com/wp-content/uploads/2015/05/tree-files.gif)](http://www.codealike.com)
 
-### 1.1.0
 
-Added features X, Y, and Z.
+#### Code report
 
------------------------------------------------------------------------------------------------------------
+It helps you understand how much time you spend using different technologies. Have you ever wondered what are the 5 files that your attention the most? Well, wonder no more...
 
-## Working with Markdown
+[![](https://blog.codealike.com/wp-content/uploads/2015/05/tech.gif)](http://www.codealike.com) 
 
-**Note:** You can author your README using Visual Studio Code.  Here are some useful editor keyboard shortcuts:
+_Powerful Metrics for High Performance Software Developers._
 
-* Split the editor (`Cmd+\` on OSX or `Ctrl+\` on Windows and Linux)
-* Toggle preview (`Shift+CMD+V` on OSX or `Shift+Ctrl+V` on Windows and Linux)
-* Press `Ctrl+Space` (Windows, Linux) or `Cmd+Space` (OSX) to see a list of Markdown snippets
-
-### For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+[SIGN UP TO BEGIN](https://codealike.com/Account/Register) | [www.codealike.com](http://www.codealike.com) |
+</div>
