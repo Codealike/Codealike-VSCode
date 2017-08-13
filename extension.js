@@ -95,10 +95,7 @@ exports.activate = activate;
 
 // this method is called when your extension is deactivated
 function deactivate() {
-    return new Promise(function(resolve, reject) {
-        Codealike.dispose();
-        resolve();
-    });
+    Codealike.dispose();
 }
 exports.deactivate = deactivate;
 
@@ -117,6 +114,14 @@ function startTrackingProject() {
             // start tracking project
             Codealike.startTracking(configuration, currentDate);
         });
+
+    vscode.debug.onDidStartDebugSession((event) => {
+        console.log(event);
+    });
+
+    vscode.debug.onDidTerminateDebugSession((event) => {
+        console.log(event);
+    })
 
     vscode.workspace.onDidChangeTextDocument((event) => {
         let lineAt = null;
