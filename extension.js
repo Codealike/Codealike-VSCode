@@ -117,10 +117,12 @@ function startTrackingProject() {
 
     vscode.debug.onDidStartDebugSession((event) => {
         console.log(event);
+        Codealike.trackDebuggingState();
     });
 
     vscode.debug.onDidTerminateDebugSession((event) => {
         console.log(event);
+        Codealike.trackCodingState();
     })
 
     vscode.workspace.onDidChangeTextDocument((event) => {
