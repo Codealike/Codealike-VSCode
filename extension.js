@@ -95,7 +95,11 @@ exports.activate = activate;
 
 // this method is called when your extension is deactivated
 function deactivate() {
-    Codealike.dispose();
+    setTimeout(function() {
+        Codealike.dispose();
+    }, 0);
+
+    return undefined;
 }
 exports.deactivate = deactivate;
 
@@ -116,14 +120,12 @@ function startTrackingProject() {
         });
 
     vscode.debug.onDidStartDebugSession((event) => {
-        console.log(event);
         Codealike.trackDebuggingState();
     });
 
     vscode.debug.onDidTerminateDebugSession((event) => {
-        console.log(event);
         Codealike.trackCodingState();
-    })
+    });
 
     vscode.workspace.onDidChangeTextDocument((event) => {
         let lineAt = null;
