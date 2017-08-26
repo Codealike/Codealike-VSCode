@@ -15,7 +15,7 @@ function activate(context) {
     if (vscode.workspace.rootPath) {
 
         // initialize plugin for current client and version
-        Codealike.initialize('vscode', '0.0.6');
+        Codealike.initialize('vscode', '0.0.8');
 
         // if user token configuration found, connect!
         if (Codealike.hasUserToken()) {
@@ -116,7 +116,7 @@ function startTrackingProject() {
             let currentDate = new Date();
 
             // start tracking project
-            Codealike.startTracking(configuration, currentDate);
+        Codealike.startTracking(configuration, currentDate);
         });
 
     vscode.debug.onDidStartDebugSession((event) => {
@@ -128,30 +128,92 @@ function startTrackingProject() {
     });
 
     vscode.workspace.onDidChangeTextDocument((event) => {
-        let lineAt = null;
-        if (event.contentChanges.length && event.contentChanges[0].range.length) {
-            lineAt = event.contentChanges[0].range[0].line;
-        }
+        //let lineAt = null;
+        //if (event.contentChanges.length) {
+        //    lineAt = event.document.positionAt().line;
+        //}
 
-        let context = {
-            file: event.document.fileName,
-            line: lineAt
-        };
+        vscode
+            .commands
+            .executeCommand('vscode.executeDocumentSymbolProvider', event.document.uri)
+            .then(function(result) {
+                if (!event.contentChanges)
+                    return;
 
-        Codealike.trackCodingEvent(context);
+                var line = event.contentChanges[0].range._start._line;
+                var className = null;
+                var member = null;
+
+                result.forEach(function(element) {
+                    if (!element || element.location.range._start.line > line)
+                        return;
+
+                    if (element.kind == vscode.SymbolKind.Class) {
+                        className = element.name;
+                    }
+
+                    if (element.kind == vscode.SymbolKind.Method) {
+                        member = element.name;
+                    }
+
+                }, this);
+
+                let context = {
+                    file: event.document.fileName,
+                    line: line,
+                    className: className,
+                    member: member
+                }
+
+                Codealike.trackCodingEvent(context);
+            }, 
+            function(error) {
+                console.warn("Error trying to track coding event", error);
+            }
+        );
     });
 
     vscode.window.onDidChangeTextEditorSelection((event) => {
         // TODO: pending to check events like cursor keys as focus
-
-        // track mouse events as focus
         if (event.kind === 2) {
-            let context = {
-                file: event.textEditor._documentData._document.fileName,
-                line: event.selections["0"].active.line
-            };
+            vscode
+                .commands
+                .executeCommand('vscode.executeDocumentSymbolProvider', event.textEditor.document.uri)
+                .then(function(result) {
+                    if (!event.selections)
+                        return;
 
-            Codealike.trackFocusEvent(context);
+                    var line = event.selections[0]._active._line;
+                    var className = null;
+                    var member = null;
+
+                    result.forEach(function(element) {
+                        if (!element || element.location.range._start.line > line)
+                            return;
+
+                        if (element.kind == vscode.SymbolKind.Class) {
+                            className = element.name;
+                        }
+
+                        if (element.kind == vscode.SymbolKind.Method) {
+                            member = element.name;
+                        }
+
+                    }, this);
+
+                    let context = {
+                        file: event.textEditor.document.fileName,
+                        line: line,
+                        className: className,
+                        member: member
+                    }
+
+                    Codealike.trackFocusEvent(context);
+                }, 
+                function(error) {
+                    console.warn("Error trying to track focus event", error);
+                }
+            );
         }
     });
 }
