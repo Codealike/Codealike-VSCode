@@ -15,7 +15,7 @@ function activate(context) {
     if (vscode.workspace.rootPath) {
 
         // initialize plugin for current client and version
-        Codealike.initialize('vscode', '0.0.8');
+        Codealike.initialize('vscode', '0.0.9');
 
         // if user token configuration found, connect!
         if (Codealike.hasUserToken()) {
