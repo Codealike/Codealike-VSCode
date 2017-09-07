@@ -15,7 +15,7 @@ function activate(context) {
     if (vscode.workspace.rootPath) {
 
         // initialize plugin for current client and version
-        Codealike.initialize('vscode', '0.0.10');
+        Codealike.initialize('vscode', '0.0.11');
 
         // if user token configuration found, connect!
         if (Codealike.hasUserToken()) {
@@ -137,7 +137,7 @@ function startTrackingProject() {
             .commands
             .executeCommand('vscode.executeDocumentSymbolProvider', event.document.uri)
             .then(function(result) {
-                if (!event.contentChanges)
+                if (!event.contentChanges || event.contentChanges.length == 0)
                     return;
 
                 var line = event.contentChanges[0].range._start._line;
@@ -180,7 +180,7 @@ function startTrackingProject() {
                 .commands
                 .executeCommand('vscode.executeDocumentSymbolProvider', event.textEditor.document.uri)
                 .then(function(result) {
-                    if (!event.selections)
+                    if (!event.selections || event.selections.length == 0)
                         return;
 
                     var line = event.selections[0]._active._line;
