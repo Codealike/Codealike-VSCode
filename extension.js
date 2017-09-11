@@ -15,7 +15,7 @@ function activate(context) {
     if (vscode.workspace.rootPath) {
 
         // initialize plugin for current client and version
-        Codealike.initialize('vscode', '0.0.11');
+        Codealike.initialize('vscode', '0.0.12');
 
         // if user token configuration found, connect!
         if (Codealike.hasUserToken()) {
@@ -111,13 +111,18 @@ function startTrackingProject() {
     // start tracking project
     Codealike
         .configure(vscode.workspace.rootPath)
-        .then((configuration) => {
-            // calculate when workspace started loading
-            let currentDate = new Date();
+        .then(
+            (configuration) => {
+                // calculate when workspace started loading
+                let currentDate = new Date();
 
-            // start tracking project
-        Codealike.startTracking(configuration, currentDate);
-        });
+                // start tracking project
+                Codealike.startTracking(configuration, currentDate);
+            },
+            (error) => {
+                vscode.window.showErrorMessage(error);
+            }
+    );
 
     vscode.debug.onDidStartDebugSession((event) => {
         Codealike.trackDebuggingState();

@@ -2,7 +2,7 @@
   "name": "codealike-code",
   "displayName": "Codealike",
   "description": "Codealike for Visual Studio Code",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "publisher": "Codealike",
   "license": "MIT",
   "author": {
@@ -61,6 +61,6 @@
     "@types/mocha": "^2.2.32"
   },
   "dependencies": {
-    "@codealike/codealike-core": "0.0.13"
+    "@codealike/codealike-core": "0.0.14"
   }
 }
