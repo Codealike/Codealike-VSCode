@@ -61,6 +61,6 @@
     "@types/mocha": "^2.2.32"
   },
   "dependencies": {
-    "@codealike/codealike-core": "0.0.21"
+    "@codealike/codealike-core": "0.0.23"
   }
 }
