@@ -13,30 +13,36 @@ function activate(context) {
 
     // if there is a folder loaded, initialize codealike
     if (vscode.workspace.rootPath) {
+        statusBarItem.text = "Codealike is initializing...";
 
         // initialize plugin for current client and version
-        Codealike.initialize('vscode', '0.0.18');
+        Codealike.initialize('vscode', '0.0.19');
 
-        // if user token configuration found, connect!
-        if (Codealike.hasUserToken()) {
-            // try to connect
-            Codealike.connect()
-                    .then(
-                        () => { 
-                            statusBarItem.text = "Codealike is connected"; 
+        Codealike.registerStateSubscriber((state) => {
+            if (state.networkStatus === 'OnLine') {
+                statusBarItem.text = "Codealike is tracking on-line";
+            }
+            else {
+                if (state.isTracking) {
+                    statusBarItem.text = "Codealike is tracking off-line";
+                }
+                else {
+                    statusBarItem.text = "Click here to configure Codealike";
+                }
+            }
+        });
 
-                            startTrackingProject();
-                        },
-                        () => { 
-                            statusBarItem.text = "Codealike is not connected"; 
-
-                            stopTrackingProject();
-                        }
-                    );
-        }
-        else {
-            statusBarItem.text = "Click here to configure Codealike";
-        }
+        // try to connect
+        Codealike.connect()
+                .then(
+                    () => { 
+                        startTrackingProject();
+                    },
+                    () => { 
+                        stopTrackingProject();
+                    }
+                );
+        
     }
 
     // Use the console to output diagnostic information (console.log) and errors (console.error)
@@ -70,11 +76,9 @@ function activate(context) {
                     Codealike.connect()
                         .then(
                             () => { 
-                                statusBarItem.text = "Codealike is connected"; 
                                 startTrackingProject();
                             },
                             () => { 
-                                statusBarItem.text = "Codealike cannot connect"; 
                                 stopTrackingProject();
                             }
                         );
@@ -82,7 +86,6 @@ function activate(context) {
                 else {
                     stopTrackingProject();
                     Codealike.disconnect();
-                    statusBarItem.text = "Click here to configure Codealike";
                 }
             }
         );
