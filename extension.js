@@ -19,16 +19,16 @@ function activate(context) {
         Codealike.initialize('vscode', '0.0.19');
 
         Codealike.registerStateSubscriber((state) => {
-            if (state.networkStatus === 'OnLine') {
-                statusBarItem.text = "Codealike is tracking on-line";
-            }
-            else {
-                if (state.isTracking) {
-                    statusBarItem.text = "Codealike is tracking off-line";
+            if (state.isTracking) {
+                if (state.networkStatus === 'OnLine') {
+                    statusBarItem.text = "Codealike is tracking on-line";
                 }
                 else {
-                    statusBarItem.text = "Click here to configure Codealike";
+                    statusBarItem.text = "Codealike is tracking off-line";
                 }
+            }
+            else {
+                statusBarItem.text = "Click here to configure Codealike";
             }
         });
 
