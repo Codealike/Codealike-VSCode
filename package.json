@@ -58,9 +58,9 @@
     "eslint": "^3.6.0",
     "mocha": "^2.3.3",
     "typescript": "^2.6.2",
-    "vscode": "^1.1.10"
+    "vscode": "^1.1.29"
   },
   "dependencies": {
-    "@codealike/codealike-core": "0.0.31"
+    "@codealike/codealike-core": "0.0.34"
   }
 }
