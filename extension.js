@@ -111,9 +111,12 @@ function stopTrackingProject() {
 }
 
 function startTrackingProject() {
+    if (!vscode.workspace.workspaceFolders)
+        return;
+
     // start tracking project
     Codealike
-        .configure(vscode.workspace.rootPath)
+        .configure(vscode.workspace.workspaceFolders[0].uri.fsPath)
         .then(
             (configuration) => {
                 // calculate when workspace started loading
