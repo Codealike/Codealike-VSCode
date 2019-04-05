@@ -61,6 +61,6 @@
     "vscode": "^1.1.29"
   },
   "dependencies": {
-    "@codealike/codealike-core": "0.0.34"
+    "@codealike/codealike-core": "0.0.35"
   }
 }
