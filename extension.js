@@ -6,7 +6,6 @@ var Codealike = require('@codealike/codealike-core').Codealike;
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 function activate(context) {
-
     const statusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left);
     statusBarItem.command = "codealike.connect";
     statusBarItem.show();
@@ -16,7 +15,7 @@ function activate(context) {
         statusBarItem.text = "Codealike is initializing...";
 
         // initialize plugin for current client and version
-        Codealike.initialize('vscode', '0.0.23');
+        Codealike.initialize('vscode', '0.0.24');
 
         Codealike.registerStateSubscriber((state) => {
             if (state.isTracking) {
