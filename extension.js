@@ -155,19 +155,20 @@ function startTrackingProject() {
                 var className = null;
                 var member = null;
 
-                result.forEach(function(element) {
-                    if (!element || element.location.range._start.line > line)
-                        return;
+                if (result) {
+                    result.forEach(function(element) {
+                        if (!element || element.location.range._start.line > line)
+                            return;
 
-                    if (element.kind == vscode.SymbolKind.Class) {
-                        className = element.name;
-                    }
+                        if (element.kind == vscode.SymbolKind.Class) {
+                            className = element.name;
+                        }
 
-                    if (element.kind == vscode.SymbolKind.Method) {
-                        member = element.name;
-                    }
-
-                }, this);
+                        if (element.kind == vscode.SymbolKind.Method) {
+                            member = element.name;
+                        }
+                    }, this);
+                }
 
                 let context = {
                     file: event.document.fileName,
@@ -177,7 +178,7 @@ function startTrackingProject() {
                 }
 
                 Codealike.trackCodingEvent(context);
-            }, 
+            },
             function(error) {
                 console.warn("Error trying to track coding event", error);
             }
@@ -198,19 +199,20 @@ function startTrackingProject() {
                     var className = null;
                     var member = null;
 
-                    result.forEach(function(element) {
-                        if (!element || element.location.range._start.line > line)
-                            return;
+                    if (result) {
+                        result.forEach(function(element) {
+                            if (!element || element.location.range._start.line > line)
+                                return;
 
-                        if (element.kind == vscode.SymbolKind.Class) {
-                            className = element.name;
-                        }
+                            if (element.kind == vscode.SymbolKind.Class) {
+                                className = element.name;
+                            }
 
-                        if (element.kind == vscode.SymbolKind.Method) {
-                            member = element.name;
-                        }
-
-                    }, this);
+                            if (element.kind == vscode.SymbolKind.Method) {
+                                member = element.name;
+                            }
+                        }, this);
+                    }
 
                     let context = {
                         file: event.textEditor.document.fileName,
@@ -220,7 +222,7 @@ function startTrackingProject() {
                     }
 
                     Codealike.trackFocusEvent(context);
-                }, 
+                },
                 function(error) {
                     console.warn("Error trying to track focus event", error);
                 }
