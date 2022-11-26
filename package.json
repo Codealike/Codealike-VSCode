@@ -49,13 +49,14 @@
     ]
   },
   "scripts": {
-    "postinstall": "node ./node_modules/vscode/bin/install",
+    "postinstall-removed": "node ./node_modules/vscode/bin/install",
     "test": "node ./node_modules/vscode/bin/test",
     "vscode:prepublish": "npm run esbuild-base -- --minify",
     "esbuild-base": "esbuild ./extension.js --bundle --outfile=out/main.js --external:vscode --format=cjs --platform=node",
     "esbuild": "npm run esbuild-base -- --sourcemap",
     "esbuild-watch": "npm run esbuild-base -- --sourcemap --watch",
-    "test-compile": "tsc -p ./"
+    "test-compile": "tsc -p ./",
+    "package": "webpack --mode production --devtool hidden-source-map"
   },
   "devDependencies": {
     "@types/mocha": "^10.0.0",
@@ -66,8 +67,10 @@
     "typescript": "^2.6.2"
   },
   "dependencies": {
-    "@codealike/codealike-core": "file:../Codealike-plugins-core",
     "@types/vscode": "^1.73.1",
-    "@vscode/test-electron": "^2.2.0"
+    "@vscode/test-electron": "^2.2.0",
+    "ts-loader": "^5.4.5",
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.0"
   }
 }
