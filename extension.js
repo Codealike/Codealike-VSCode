@@ -15,7 +15,7 @@ function activate(context) {
         statusBarItem.text = "Codealike is initializing...";
 
         // initialize plugin for current client and version
-        Codealike.initialize('vscode', '0.0.24');
+        Codealike.initialize('vscode', '0.0.25');
 
         Codealike.registerStateSubscriber((state) => {
             if (state.isTracking) {
@@ -129,11 +129,11 @@ function startTrackingProject() {
             }
     );
 
-    vscode.debug.onDidStartDebugSession((event) => {
+    vscode.debug.onDidStartDebugSession(() => {
         Codealike.trackDebuggingState();
     });
 
-    vscode.debug.onDidTerminateDebugSession((event) => {
+    vscode.debug.onDidTerminateDebugSession(() => {
         Codealike.trackCodingState();
     });
 
@@ -150,7 +150,7 @@ function startTrackingProject() {
                 if (!event.contentChanges || event.contentChanges.length == 0)
                     return;
 
-                var line = event.contentChanges[0].range._start._line;
+                var line = event.contentChanges[0].range.start.line;
                 var className = null;
                 var member = null;
 
@@ -194,7 +194,7 @@ function startTrackingProject() {
                     if (!event.selections || event.selections.length == 0)
                         return;
 
-                    var line = event.selections[0]._active._line;
+                    var line = event.selections[0].active.line;
                     var className = null;
                     var member = null;
 
