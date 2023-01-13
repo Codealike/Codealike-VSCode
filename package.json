@@ -65,6 +65,6 @@
     "@vscode/test-electron": "^2.2.0"
   },
   "dependencies": {
-    "@codealike/codealike-core": "0.0.35"
+    "@codealike/codealike-core": "0.0.37"
   }
 }
