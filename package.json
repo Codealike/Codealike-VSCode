@@ -2,7 +2,7 @@
   "name": "codealike-code",
   "displayName": "Codealike",
   "description": "Codealike for Visual Studio Code",
-  "version": "0.0.25",
+  "version": "0.0.26",
   "publisher": "Codealike",
   "license": "MIT",
   "author": {
@@ -72,6 +72,7 @@
   },
   "dependencies": {
     "@codealike/codealike-core": "0.0.37",
-    "esbuild": "^0.17.3"
+    "esbuild": "^0.17.3",
+    "node-fetch": "^2.6.9"
   }
 }
