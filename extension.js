@@ -11,36 +11,43 @@ function activate(context) {
     statusBarItem.show();
 
     // if there is a folder loaded, initialize codealike
-    if (vscode.workspace.rootPath) {
-        statusBarItem.text = "Codealike is initializing...";
+    if (vscode.workspace.workspaceFolders && vscode.workspace.workspaceFolders.length > 0) {
+        const rootPath = vscode.workspace.workspaceFolders[0].uri.fsPath;
+        
+        if (rootPath) {
+            statusBarItem.text = "Codealike is initializing...";
 
-        // initialize plugin for current client and version
-        Codealike.initialize('vscode', '0.0.26');
+            // initialize plugin for current client and version
+            Codealike.initialize('vscode', '0.0.27');
 
-        Codealike.registerStateSubscriber((state) => {
-            if (state.isTracking) {
-                if (state.networkStatus === 'OnLine') {
-                    statusBarItem.text = "Codealike is tracking on-line";
+            Codealike.registerStateSubscriber((state) => {
+                if (state.isTracking) {
+                    if (state.networkStatus === 'OnLine') {
+                        statusBarItem.text = "Codealike is tracking on-line";
+                    }
+                    else {
+                        statusBarItem.text = "Codealike is tracking off-line";
+                    }
                 }
                 else {
-                    statusBarItem.text = "Codealike is tracking off-line";
+                    statusBarItem.text = "Click here to configure Codealike";
                 }
-            }
-            else {
-                statusBarItem.text = "Click here to configure Codealike";
-            }
-        });
+            });
+        
 
-        // try to connect
-        Codealike.connect()
-                .then(
-                    () => { 
-                        startTrackingProject();
-                    },
-                    () => { 
-                        stopTrackingProject();
-                    }
-                );
+            // try to connect
+            Codealike.connect()
+                    .then(
+                        () => { 
+                            startTrackingProject();
+                        },
+                        () => { 
+                            stopTrackingProject();
+                        }
+                    );
+        }else{
+            
+        }
         
     }
 
@@ -115,7 +122,7 @@ function startTrackingProject() {
 
     // start tracking project
     Codealike
-        .configure(vscode.workspace.workspaceFolders[0].uri.fsPath)
+        .configure(vscode.workspace.workspaceFolders[0].uri.fsPath) // get currently active work spaces...
         .then(
             (configuration) => {
                 // calculate when workspace started loading
@@ -150,8 +157,8 @@ function startTrackingProject() {
 
         results.forEach(element => {
             if (!element) return;
-            if (!element.location || !element.location.range) return;
-            if (!element.location.range._start?.line) {
+            if (!element?.location || !element?.location.range) return;
+            if (!element?.location.range._start?.line) {
                return; 
             }
             const rangeLine = element.location.range._start.line;
