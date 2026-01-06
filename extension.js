@@ -18,7 +18,7 @@ function activate(context) {
             statusBarItem.text = "Codealike is initializing...";
 
             // initialize plugin for current client and version
-            Codealike.initialize('vscode', '0.0.26');
+            Codealike.initialize('vscode', '0.0.27');
 
             Codealike.registerStateSubscriber((state) => {
                 if (state.isTracking) {
