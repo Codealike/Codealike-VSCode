@@ -11,36 +11,43 @@ function activate(context) {
     statusBarItem.show();
 
     // if there is a folder loaded, initialize codealike
-    if (vscode.workspace.rootPath) {
-        statusBarItem.text = "Codealike is initializing...";
+    if (vscode.workspace.workspaceFolders && vscode.workspace.workspaceFolders.length > 0) {
+        const rootPath = vscode.workspace.workspaceFolders[0].uri.fsPath;
+        
+        if (rootPath) {
+            statusBarItem.text = "Codealike is initializing...";
 
-        // initialize plugin for current client and version
-        Codealike.initialize('vscode', '0.0.24');
+            // initialize plugin for current client and version
+            Codealike.initialize('vscode', '0.0.27');
 
-        Codealike.registerStateSubscriber((state) => {
-            if (state.isTracking) {
-                if (state.networkStatus === 'OnLine') {
-                    statusBarItem.text = "Codealike is tracking on-line";
+            Codealike.registerStateSubscriber((state) => {
+                if (state.isTracking) {
+                    if (state.networkStatus === 'OnLine') {
+                        statusBarItem.text = "Codealike is tracking on-line";
+                    }
+                    else {
+                        statusBarItem.text = "Codealike is tracking off-line";
+                    }
                 }
                 else {
-                    statusBarItem.text = "Codealike is tracking off-line";
+                    statusBarItem.text = "Click here to configure Codealike";
                 }
-            }
-            else {
-                statusBarItem.text = "Click here to configure Codealike";
-            }
-        });
+            });
+        
 
-        // try to connect
-        Codealike.connect()
-                .then(
-                    () => { 
-                        startTrackingProject();
-                    },
-                    () => { 
-                        stopTrackingProject();
-                    }
-                );
+            // try to connect
+            Codealike.connect()
+                    .then(
+                        () => { 
+                            startTrackingProject();
+                        },
+                        () => { 
+                            stopTrackingProject();
+                        }
+                    );
+        }else{
+            
+        }
         
     }
 
@@ -115,7 +122,7 @@ function startTrackingProject() {
 
     // start tracking project
     Codealike
-        .configure(vscode.workspace.workspaceFolders[0].uri.fsPath)
+        .configure(vscode.workspace.workspaceFolders[0].uri.fsPath) // get currently active work spaces...
         .then(
             (configuration) => {
                 // calculate when workspace started loading
@@ -129,28 +136,58 @@ function startTrackingProject() {
             }
     );
 
-    vscode.debug.onDidStartDebugSession((event) => {
+    vscode.debug.onDidStartDebugSession(() => {
         Codealike.trackDebuggingState();
     });
 
-    vscode.debug.onDidTerminateDebugSession((event) => {
+    vscode.debug.onDidTerminateDebugSession(() => {
         Codealike.trackCodingState();
     });
 
-    vscode.workspace.onDidChangeTextDocument((event) => {
-        //let lineAt = null;
-        //if (event.contentChanges.length) {
-        //    lineAt = event.document.positionAt().line;
-        //}
+    //Given an input line and results , find the corresponding class and symbol   
+    function _findClassAndMember(results ,line) {
+        const clsSymbol = {
+            className: null,
+            member: null
+        }
 
+        if (!results || !line) {
+            return clsSymbol;
+        }
+
+        results.forEach(element => {
+            if (!element) return;
+            if (!element?.location || !element?.location.range) return;
+            if (!element?.location.range._start?.line) {
+               return; 
+            }
+            const rangeLine = element.location.range._start.line;
+            if (rangeLine > line) {
+                return;
+            }
+            if (element.kind == vscode.SymbolKind.Class) {
+                clsSymbol.className = element.name;
+            }
+            if (element.kind == vscode.SymbolKind.Method) {
+                clsSymbol.member = element.name;
+            }
+        });
+        return clsSymbol;
+    }
+
+    vscode.workspace.onDidChangeTextDocument((event) => {
+       
         vscode
             .commands
             .executeCommand('vscode.executeDocumentSymbolProvider', event.document.uri)
             .then(function(result) {
+                
                 if (!event.contentChanges || event.contentChanges.length == 0)
                     return;
 
-                var line = event.contentChanges[0].range._start._line;
+                var line = event.contentChanges[0]?.range?.start?.line;
+
+                /* OLD CODE COMMENTED AND MOVED TO COMMON FUNCTION
                 var className = null;
                 var member = null;
 
@@ -167,13 +204,15 @@ function startTrackingProject() {
                             member = element.name;
                         }
                     }, this);
-                }
+                }*/
+
+                const clsSymbol = _findClassAndMember(result, line);
 
                 let context = {
                     file: event.document.fileName,
                     line: line,
-                    className: className,
-                    member: member
+                    className: clsSymbol.className, //className,
+                    member: clsSymbol.member //member
                 }
 
                 Codealike.trackCodingEvent(context);
@@ -194,11 +233,13 @@ function startTrackingProject() {
                     if (!event.selections || event.selections.length == 0)
                         return;
 
-                    var line = event.selections[0]._active._line;
+                    var line = event.selections[0]?.active?.line;
+
+                    /* OLD CODE COMMENTED AND MOVED TO COMMON FUNCTION
                     var className = null;
                     var member = null;
 
-                    if (result) {
+                    if (result) { 
                         result.forEach(function(element) {
                             if (!element || element.location.range._start.line > line)
                                 return;
@@ -211,13 +252,15 @@ function startTrackingProject() {
                                 member = element.name;
                             }
                         }, this);
-                    }
+                    } */
+
+                    const clsSymbol = _findClassAndMember(result, line);
 
                     let context = {
                         file: event.textEditor.document.fileName,
                         line: line,
-                        className: className,
-                        member: member
+                        className: clsSymbol.className, //className,
+                        member: clsSymbol.member //member
                     }
 
                     Codealike.trackFocusEvent(context);

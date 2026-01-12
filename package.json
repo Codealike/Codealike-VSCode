@@ -2,7 +2,7 @@
   "name": "codealike-code",
   "displayName": "Codealike",
   "description": "Codealike for Visual Studio Code",
-  "version": "0.0.24",
+  "version": "0.0.27",
   "publisher": "Codealike",
   "license": "MIT",
   "author": {
@@ -21,6 +21,12 @@
   "categories": [
     "Other"
   ],
+  "engines": {
+    "vscode": "^1.74.0"
+  },
+  "activationEvents": [
+    "*"
+  ],
   "keywords": [
     "time-tracking",
     "productivity",
@@ -33,13 +39,7 @@
   "galleryBanner": {
     "color": "#c0c0c0"
   },
-  "engines": {
-    "vscode": "^1.15.0"
-  },
-  "activationEvents": [
-    "*"
-  ],
-  "main": "./extension",
+  "main": "./out/main.js",
   "contributes": {
     "commands": [
       {
@@ -49,18 +49,30 @@
     ]
   },
   "scripts": {
-    "postinstall": "node ./node_modules/vscode/bin/install",
-    "test": "node ./node_modules/vscode/bin/test"
+    "lint": "eslint .",
+    "pretest": "npm run lint",
+    "test": "node ./test/runTest.js",
+    "vscode:prepublish": "npm run esbuild-base -- --minify",
+    "esbuild-base": "esbuild ./extension.js --bundle --outfile=out/main.js --external:vscode --format=cjs --platform=node",
+    "esbuild": "npm run esbuild-base -- --sourcemap",
+    "esbuild-watch": "npm run esbuild-base -- --sourcemap --watch",
+    "test-compile": "tsc -p ./",
+    "vsce-package": "npm run esbuild;vsce package"
   },
   "devDependencies": {
-    "@types/mocha": "^2.2.46",
-    "@types/node": "^6.0.96",
-    "eslint": "^3.6.0",
-    "mocha": "^2.3.3",
-    "typescript": "^2.6.2",
-    "vscode": "^1.1.29"
+    "@types/glob": "^8.0.0",
+    "@types/mocha": "^10.0.1",
+    "@types/node": "16.x",
+    "@types/vscode": "^1.74.0",
+    "@vscode/test-electron": "^2.2.0",
+    "eslint": "^8.28.0",
+    "glob": "^8.0.3",
+    "mocha": "^10.1.0",
+    "typescript": "^4.9.3"
   },
   "dependencies": {
-    "@codealike/codealike-core": "0.0.35"
+    "@codealike/codealike-core": "^0.0.38",
+    "esbuild": "^0.25.8",
+    "node-fetch": "^2.6.9"
   }
 }
